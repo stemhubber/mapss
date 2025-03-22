@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human Verification</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Styles for the modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .close-btn {
+            float: right;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center h-screen bg-gray-100">
+    <div class="bg-white p-6 rounded-lg shadow-md w-96 text-center">
+        <div id="verification-panel">
+            <p class="flex items-center justify-center space-x-2 mb-4"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFndLWDy0aIGJNpiRaciKUZRzQOeIsxkDX0A&s"></img></p>
+        <h2 class="text-lg font-semibold mb-4">Verify You Are Human</h2>
+        <div class="flex items-center justify-center space-x-2 mb-4">
+            <input type="checkbox" id="captchaCheckbox" class="w-5 h-5">
+            <label for="captchaCheckbox" class="text-gray-700">I am not a robot</label>
+        </div>
+        <div id="challenge" class="hidden">
+            <p class="text-sm text-gray-600">What is 5 + 3?</p>
+            <input type="text" id="captchaInput" class="border rounded px-2 py-1 mt-2 w-full text-center">
+        </div>
+        <div id="feedback"></div>
+        <button id="submitBtn" class="bg-blue-500 text-white px-4 py-2 rounded mt-4 disabled:opacity-50" disabled>Submit</button>
+        </div>
+        <div id="show-map" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <div class="bg-white rounded-lg shadow-lg p-4 w-full max-w-2xl">
+                <span id="closeMapButton" class="text-gray-500 text-xl float-right cursor-pointer">&times;</span>
+                <h2 class="text-xl font-semibold text-gray-700 text-center mb-4">Location</h2>
+                <div class="w-full h-96">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d372.1731611309459!2d18.65779648375816!3d-34.05588811016681!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc48e6a2ee4aa9%3A0x31bfc29804b8a5dd!2s88%20Nompemvana%20Cres%2C%20Village%201%20South%2C%20Cape%20Town%2C%207784!5e0!3m2!1sen!2sza!4v1742672031636!5m2!1sen!2sza"
+                        class="w-full h-full border-0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+        
+        <div>
+            <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+                <div class="bg-white rounded-lg shadow-lg p-6 w-80">
+                    <span id="closeModalButton" class="text-gray-500 text-xl float-right cursor-pointer">&times;</span>
+                    <h2 class="text-xl font-semibold text-gray-700 text-center mb-4">Login</h2>
+                    <input type="email" id="email" placeholder="Enter your email"
+                        class="w-full border border-gray-300 rounded-md p-2 mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <input type="password" id="password" placeholder="Enter your password"
+                        class="w-full border border-gray-300 rounded-md p-2 mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button id="loginButton"
+                        class="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">
+                        Login
+                    </button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+        const checkbox = document.getElementById('captchaCheckbox');
+        const challenge = document.getElementById('challenge');
+        const input = document.getElementById('captchaInput');
+        const submitBtn = document.getElementById('submitBtn');
+
+        checkbox.addEventListener('change', () => {
+            if (checkbox.checked) {
+                challenge.classList.remove('hidden');
+            } else {
+                challenge.classList.add('hidden');
+                submitBtn.disabled = true;
+            }
+        });
+
+        
+
+        input.addEventListener('input', () => {
+            if (input.value.trim() === '8') {
+                submitBtn.disabled = false;
+            } else {
+                submitBtn.disabled = true;
+            }
+        });
+
+        
+    </script>
+    <script src="mapss.js" type="module"></script>
+</body>
+</html>
